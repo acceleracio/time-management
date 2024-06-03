@@ -1,0 +1,137 @@
+
+            <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Management App</title>
+   <style>
+        body {
+            /* Gradient Background */
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+           
+        
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Ensure full viewport height */
+        }
+
+        /* Form Styles */
+        form {
+           
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 
+            </style>
+</head>
+<body>
+    <h1>Let's Get Going!!!</h1>
+<img src="jazz.gif" width="100" height="100">
+    <form>
+        <label for="todo">To-Do List:</label><br>
+        <input type="text" id="todo"><br><br>
+        <label for="priority">Priority (Urgent/Important):</label><br>
+        <select id="priority">
+            <option value="urgent-important">Urgent/Important</option>
+            <option value="important-noturgent">Important/Not Urgent</option>
+            <option value="urgent-notimportant">Urgent/Not Important</option>
+            <option value="noturgent-notimportant">Not Urgent/Not Important</option>
+        </select><br><br>
+        <label for="time">Estimated Time:</label><br>
+        <input type="number" id="time"> minutes<br><br>
+        <label for="workTime">Work Time (minutes):</label><br>
+        <input type="number" id="workTime" value="25"><br><br>
+        <label for="breakTime">Break Time (minutes):</label><br>
+        <input type="number" id="breakTime" value="5"><br><br>
+        <button type="button" id="addTask">Add Task</button>
+    </form>
+    <div id="tasks">
+        <h2>Tasks:</h2>
+        <div id="taskList"></div>
+    </div>
+
+    <div id="timer">
+        <h2>Timer:</h2>
+        <p id="timerText">00:00</p>
+        <button id="startTimer">Start Timer</button>
+        <button id="resetTimer">Reset Timer</button>
+    </div>
+
+    <script>
+        document.getElementById("addTask").addEventListener("click", function() {
+            const task = document.getElementById("todo").value;
+            const priority = document.getElementById("priority").value;
+            const estimatedTime = document.getElementById("time").value;
+
+            if (task && estimatedTime) {
+                const taskContainer = document.createElement("div");
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.id = `task-${Date.now()}`;
+
+                const label = document.createElement("label");
+                label.htmlFor = checkbox.id;
+                label.textContent = `${task} - Priority: ${priority} - Estimated Time: ${estimatedTime} minutes`;
+
+                taskContainer.appendChild(checkbox);
+                taskContainer.appendChild(label);
+                document.getElementById("taskList").appendChild(taskContainer);
+
+                document.getElementById("todo").value = "";
+                document.getElementById("time").value = "";
+            } else {
+                alert("Please fill out both the task and estimated time.");
+            }
+        });
+
+        let interval;
+        let timeLeft;
+        let isBreak = false;
+
+        function startTimer() {
+            if (!interval) {
+                let workTime = parseInt(document.getElementById("workTime").value) || 25;
+                let breakTime = parseInt(document.getElementById("breakTime").value) || 5;
+                timeLeft = workTime * 60;
+                interval = setInterval(updateTimer, 1000);
+            }
+        }
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById("timerText").textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                timeLeft--;
+            } else {
+                clearInterval(interval);
+                interval = null;
+                if (isBreak) {
+                    alert("Great job! Take a break and relax.");
+                    isBreak = false;
+                    timeLeft = (parseInt(document.getElementById("workTime").value) || 25) * 60;
+                } else {
+                    alert("Time to get back to work!");
+                    isBreak = true;
+                    timeLeft = (parseInt(document.getElementById("breakTime").value) || 5) * 60;
+                }
+                interval = setInterval(updateTimer, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            interval = null;
+            document.getElementById("timerText").textContent = "00:00";
+        }
+
+        document.getElementById("startTimer").addEventListener("click", startTimer);
+        document.getElementById("resetTimer").addEventListener("click", resetTimer);
+    </script>
+<img src="phoenix.gif" width="200" height="200">
+</body>
+</html>
