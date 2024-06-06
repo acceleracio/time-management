@@ -1,16 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time Management App</title>
-    <style>
+    
+<style>
         body {
-            /* Gradient Background */
-            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            /* Animated Gradient Background */
+            background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 50px;
+        }
+        
+        @keyframes gradientAnimation {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
         }
 
         /* Form Styles */
@@ -22,7 +32,7 @@
 
         .quadrant {
             padding: 10px;
-            margin: 50px;
+            margin: 0; /* Removed margin */
             border-radius: 10px;
         }
 
@@ -79,7 +89,9 @@
         <button type="button" id="addTask">Add Task</button>
     </form>
     <br>
-
+ <div>
+  <h3>What is the PURPOSE? (IT COULD BE AN OUTCOME): <input type="text" id="realInput"/></h3>
+  <div>
     <div id="tasks">
         <h2>Tasks:</h2>
         <div class="quadrant" id="urgent-important">
@@ -95,6 +107,7 @@
             <h3>Not Urgent/Not Important</h3>
         </div>
     </div>
+
 
     <div id="timer">
         <h2>Timer:</h2>
@@ -178,7 +191,6 @@
         document.getElementById("startTimer").addEventListener("click", startTimer);
         document.getElementById("resetTimer").addEventListener("click", resetTimer);
     </script>
-
-    <img src="phoenix.gif" width="200" height="200">
+  
 </body>
 </html>
