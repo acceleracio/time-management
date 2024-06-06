@@ -1,16 +1,21 @@
 <! DOCTYPE html>  
 <html lang = "en">  
+
 <head>  
+
   <meta charset = "UTF-8">  
   <meta name = "viewport" content = "width=device-width, initial-scale=1.0">  
   <meta http-equiv = "X-UA-Compatible" content = "ie=edge">  
-   
+  <style> body { background-color: navy; } </style>
+ <div style="text-align:center; margin-top: 50;"> <img src="phoenix.gif" width="150" height="100"> </div>
 <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"> </script>  
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"> </script>   
 <style>  <title>Time Management App</title>
 
 
-body {  
+
+body 
+{  
 text-align: center;  
 }  
 a {  
@@ -27,6 +32,7 @@ a:hover {
 section, footer, header, aside {  
     display: block;  
 }  
+{ text-align: center; background-color: navy; color: white; } a { color: #389dc1; } a:visited { color: #389dc1; } a:hover { text-decoration: none; } section, footer, header, aside { display: block; }
 #clock {  
     width: 370px;  
     padding: 40px;  
@@ -537,5 +543,6 @@ $(function() {
     });  
 });  
 </script>  
+
 </body>  
 </html> 
