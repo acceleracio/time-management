@@ -6,16 +6,16 @@
     <title>Time_management</title>
     <style>
         iframe {
-            width: 45%;
-            height: 500px;
-            border: 1px solid #ccc;
+            width: 48%;
+            height: 550px;
+            border: none;
             margin: 10px;
             float: left;
         }
     </style>
 </head>
-<body>
-    <iframe src="file:///C:/Users/psaaj/Downloads/FILE/t7.html" title="Page 1"></iframe>
-    <iframe src="file:///C:/Users/psaaj/Downloads/clock.html"></iframe>
+<body style="background-color:black;">
+    <iframe src="t7.html" frameborder="0"title="Page 1"></iframe>
+    <iframe src="clock.html" frameborder="0"></iframe>
 </body>
 </html>
