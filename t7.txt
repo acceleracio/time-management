@@ -90,8 +90,13 @@
     </form>
     <br>
  <div>
-  <h3>What is the PURPOSE? (IT COULD BE AN OUTCOME): <input type="text" id="realInput"/></h3>
+  <h3>What is the PURPOSE/FAVOURITE QUOTE? (IT COULD BE AN OUTCOME): <input type="text" id="realInput"/></h3>
   <div>
+    
+      <div>
+  <h3>Negative consequence (If you fail to complete on time): <input type="text" id="realInput"/></h3>
+  <div>
+      <br>
     <div id="tasks">
         <h2>Tasks:</h2>
         <div class="quadrant" id="urgent-important">
