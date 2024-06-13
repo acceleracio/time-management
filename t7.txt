@@ -84,7 +84,7 @@
 <body>
     <h1>STOP WASTING YOUR TIME AND LET'S GET GOING!!!</h1><img src="jazz.gif" width="50" height="50">
   
-    <h2>Ensure your task is in the right priority order:</h2>
+    <h2>Ensure the task entered is in the right priority setting:</h2>
     <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
     <form>
         <label for="username">Username:</label><br>
