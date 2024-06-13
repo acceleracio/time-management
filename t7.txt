@@ -87,7 +87,7 @@
     <h2>Ensure the task entered is in the right priority setting:</h2>
     <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
     <form>
-        <label for="username">Username:</label><br>
+        <label for="username">Enter your email id:</label><br>
         <input type="text" id="username"><br><br>
         <button type="button" id="login">Login</button>
     </form>
