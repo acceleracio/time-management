@@ -5,17 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Time_management</title>
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: black;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
+        }
+
+        .container {
+            display: flex;
+            height: 100%;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .iframe-wrapper {
+            flex: 1; /* Each iframe wrapper occupies equal space */
+            height: 100%;
+        }
+
         iframe {
-            width: 48%;
-            height: 690px;
+            width: 100%;
+            height: 100%;
             border: none;
-            margin: 10px;
-            float: left;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
     </style>
 </head>
-<body style="background-color:black;">
-    <iframe src="t7.html" frameborder="0"title="Page 1"></iframe>
-    <iframe src="clock.html" frameborder="0"></iframe>
+<body>
+    <div class="container">
+        <div class="iframe-wrapper">
+            <iframe src="t7.html" frameborder="0" title="Page 1"></iframe>
+        </div>
+        <div class="iframe-wrapper">
+            <iframe src="clock.html" frameborder="0"></iframe>
+        </div>
+    </div>
 </body>
 </html>
