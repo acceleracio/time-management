@@ -76,13 +76,13 @@
             cursor: pointer;
         }
 
-        h1 {
-            color: red; /* Added style to make the h1 heading red */
+        h2 {
+            color: navy; /* Added style to make the h1 heading red */
         }
     </style>
 </head>
 <body>
-    <h1>STOP WASTING YOUR TIME AND LET'S GET GOING!!!</h1><img src="jazz.gif" width="50" height="50">
+   
   
     <h2>Ensure the task entered is in the right priority setting:</h2>
     <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
