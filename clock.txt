@@ -92,6 +92,54 @@
 </head>
 
 <body>
+<style>
+        body {
+            transition: transform 0.3s ease;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 50px;
+            height: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-increase {
+            background-color: #000000;
+        }
+        .btn-decrease {
+            background-color: #f44336;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(1px);
+        }
+    </style>
+</head>
+<body>
+    <button class="btn btn-increase" onclick="resizePage(1.1)">+</button>
+    <button class="btn btn-decrease" onclick="resizePage(0.9)">-</button>
+
+    <script>
+        let scale = 1;
+
+        function resizePage(factor) {
+            scale *= factor;
+            document.body.style.transform = `scale(${scale})`;
+            document.body.style.transformOrigin = '0 0';
+        }
+    </script>
+</body>
     <h1>TIME TRACKER</h1>
     <div class="digital-clock" id="digital-clock">
         <!-- Digital clock will be inserted here -->
