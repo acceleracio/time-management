@@ -148,8 +148,8 @@
             <option value="urgent-notimportant">Urgent/Not Important</option>
             <option value="noturgent-notimportant">Not Urgent/Not Important</option>
         </select><br><br>
-        <label for="time">Estimated Time:</label><br>
-        <input type="number" id="time"> minutes<br><br>
+        <label for="time">Estimated Time(minutes):</label><br>
+        <input type="number" id="time"> <br><br>
         <label for="workTime">Work Time (minutes):</label><br>
         <input type="number" id="workTime" value="25"><br><br>
         <label for="breakTime">Break Time (minutes):</label><br>
@@ -244,12 +244,12 @@
                     clearInterval(interval);
                     interval = null;
                     if (isBreak) {
-                        alert("Time to get back to work!");
+                        ;
                         isBreak = false;
                         timeLeft = (parseInt(document.getElementById("workTime").value) || 25) * 60;
                         document.getElementById("backgroundAudio").play();
                     } else {
-                        alert("Great job! Take a break and relax.");
+                ;
                         isBreak = true;
                         timeLeft = (parseInt(document.getElementById("breakTime").value) || 5) * 60;
                         document.getElementById("backgroundAudio").pause();
