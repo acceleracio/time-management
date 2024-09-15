@@ -131,6 +131,8 @@
 </body>
   
     <h2>Ensure the task entered is in the right priority setting:</h2>
+
+<p><a href="t72.html">Go to weekly/monthly view </a></p>
     <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
     <form>
         <label for="username">Enter your email id:</label><br>
@@ -141,7 +143,7 @@
     <form id="taskForm" style="display:none;">
         <label for="todo">To-Do List:</label><br>
         <input type="text" id="todo"><br><br>
-        <label for="priority">Priority level:</label><br>
+        <label for="priority">Priority (Urgent/Important):</label><br>
         <select id="priority">
             <option value="urgent-important">Urgent/Important</option>
             <option value="important-noturgent">Important/Not Urgent</option>
@@ -244,12 +246,12 @@
                     clearInterval(interval);
                     interval = null;
                     if (isBreak) {
-                        ;
+                        alert("Time to get back to work!");
                         isBreak = false;
                         timeLeft = (parseInt(document.getElementById("workTime").value) || 25) * 60;
                         document.getElementById("backgroundAudio").play();
                     } else {
-                ;
+                        alert("Great job! Take a break and relax.");
                         isBreak = true;
                         timeLeft = (parseInt(document.getElementById("breakTime").value) || 5) * 60;
                         document.getElementById("backgroundAudio").pause();
