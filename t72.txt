@@ -139,7 +139,7 @@
       <button onclick="logout()">Logout</button>
     </div>
 
-<p><a href="file:///D:/DESKTOP%201/dbt/time%20mang/time88.html">Go back to today mode</a></p>
+<p><a href="t7.html">Go back to today mode</a></p>
 
     <div id="calendar-container" style="display: none;">
       <div class="view-toggle">
