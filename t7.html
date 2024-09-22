@@ -7,7 +7,6 @@
     
     <style>
         body {
-            /* Animated Gradient Background */
             background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite;
@@ -22,7 +21,6 @@
             100% {background-position: 0% 50%;}
         }
 
-        /* Form Styles */
         form {
             padding: 50px;
             border-radius: 20px;
@@ -31,29 +29,33 @@
 
         .quadrant {
             padding: 10px;
-            margin: 0; /* Removed margin */
+            margin: 0;
             border-radius: 10px;
         }
 
         #urgent-important {
-            background: red;
+            background: rgba(255, 0, 0, 0.3);
         }
 
         #important-noturgent {
-            background: blue;
+            background: rgba(0, 0, 255, 0.3);
         }
 
         #urgent-notimportant {
-            background: green;
+            background: rgba(0, 255, 0, 0.3);
         }
 
         #noturgent-notimportant {
-            background: yellow;
+            background: rgba(255, 255, 0, 0.3);
         }
 
         .task {
             display: flex;
             align-items: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
         }
 
         .task label {
@@ -63,7 +65,7 @@
         .checkbox-label {
             display: flex;
             align-items: center;
-            flex-grow: 1; /* Allows the task label to take up the remaining space */
+            flex-grow: 1;
         }
 
         .delete-button {
@@ -77,14 +79,9 @@
         }
 
         h2 {
-            color: navy; /* Added style to make the h1 heading red */
+            color: navy;
         }
-    </style>
-</head>
-<style>
-        body {
-            transition: transform 0.3s ease;
-        }
+
         .btn {
             padding: 10px 20px;
             margin: 5px;
@@ -119,20 +116,9 @@
     <button class="btn btn-increase" onclick="resizePage(1.1)">+</button>
     <button class="btn btn-decrease" onclick="resizePage(0.9)">-</button>
 
-    <script>
-        let scale = 1;
-
-        function resizePage(factor) {
-            scale *= factor;
-            document.body.style.transform = `scale(${scale})`;
-            document.body.style.transformOrigin = '0 0';
-        }
-    </script>
-</body>
-  
     <h2>Ensure the task entered is in the right priority setting:</h2>
 
-<p><a href="t72.html">Go to weekly/monthly view </a></p>
+    <p><a href="t72.html">Go to weekly/monthly view </a></p>
     <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
     <form>
         <label for="username">Enter your email id:</label><br>
@@ -188,6 +174,22 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let currentUser = localStorage.getItem("currentUser");
+            let scale = parseFloat(localStorage.getItem("zoomLevel")) || 1;
+
+            function applyZoom() {
+                document.body.style.transform = `scale(${scale})`;
+                document.body.style.transformOrigin = '0 0';
+            }
+
+            applyZoom();
+
+            function resizePage(factor) {
+                scale *= factor;
+                applyZoom();
+                localStorage.setItem("zoomLevel", scale.toString());
+            }
+
+            window.resizePage = resizePage;
 
             if (currentUser) {
                 document.getElementById("username").value = currentUser;
@@ -287,6 +289,7 @@
 
             function addTaskToUI(user, task, priority, estimatedTime) {
                 const taskContainer = document.createElement("div");
+                taskContainer.classList.add("task");
                 const label = document.createElement("label");
                 label.textContent = `${task} - Priority: ${priority} - Estimated Time: ${estimatedTime} minutes`;
 
