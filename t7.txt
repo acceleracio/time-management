@@ -13,6 +13,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 50px;
+            transition: transform 0.3s ease;
         }
         
         @keyframes gradientAnimation {
@@ -29,43 +30,48 @@
 
         .quadrant {
             padding: 10px;
-            margin: 0;
+            margin: 0 0 20px 0;
             border-radius: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
         }
 
         #urgent-important {
-            background: rgba(255, 0, 0, 0.3);
+            background: rgba(255, 0, 0, 0.7);
         }
 
         #important-noturgent {
-            background: rgba(0, 0, 255, 0.3);
+            background: rgba(0, 0, 255, 0.7);
         }
 
         #urgent-notimportant {
-            background: rgba(0, 255, 0, 0.3);
+            background: rgba(0, 255, 0, 0.7);
         }
 
         #noturgent-notimportant {
-            background: rgba(255, 255, 0, 0.3);
+            background: rgba(255, 255, 0, 0.7);
         }
 
         .task {
             display: flex;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 5px;
-            margin-bottom: 5px;
-            border-radius: 5px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
         }
 
         .task label {
             margin-right: 10px;
+            word-break: break-word;
         }
 
         .checkbox-label {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             flex-grow: 1;
+            flex-wrap: wrap;
         }
 
         .delete-button {
@@ -118,7 +124,7 @@
 
     <h2>Ensure the task entered is in the right priority setting:</h2>
 
-   
+
     <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
     <form>
         <label for="username">Enter your email id:</label><br>
@@ -172,24 +178,20 @@
     </div>
         
     <script>
+        let scale = 1;
+
+        function resizePage(factor) {
+            scale *= factor;
+            document.body.style.transform = `scale(${scale})`;
+            document.body.style.transformOrigin = '0 0';
+            localStorage.setItem('zoomLevel', scale);
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             let currentUser = localStorage.getItem("currentUser");
-            let scale = parseFloat(localStorage.getItem("zoomLevel")) || 1;
-
-            function applyZoom() {
-                document.body.style.transform = `scale(${scale})`;
-                document.body.style.transformOrigin = '0 0';
-            }
-
-            applyZoom();
-
-            function resizePage(factor) {
-                scale *= factor;
-                applyZoom();
-                localStorage.setItem("zoomLevel", scale.toString());
-            }
-
-            window.resizePage = resizePage;
+            scale = parseFloat(localStorage.getItem('zoomLevel')) || 1;
+            document.body.style.transform = `scale(${scale})`;
+            document.body.style.transformOrigin = '0 0';
 
             if (currentUser) {
                 document.getElementById("username").value = currentUser;
@@ -273,21 +275,21 @@
             document.getElementById("startTimer").addEventListener("click", startTimer);
             document.getElementById("resetTimer").addEventListener("click", resetTimer);
 
-            function saveTask(user, task, priority, estimatedTime) {
+            function saveTask(user, task, priority, estimatedTime, isChecked = false) {
                 let tasks = JSON.parse(localStorage.getItem(user)) || [];
-                tasks.push({ task, priority, estimatedTime });
+                tasks.push({ task, priority, estimatedTime, isChecked });
                 localStorage.setItem(user, JSON.stringify(tasks));
             }
 
             function loadTasks(user) {
                 let tasks = JSON.parse(localStorage.getItem(user)) || [];
                 tasks.forEach(function(taskObj) {
-                    const { task, priority, estimatedTime } = taskObj;
-                    addTaskToUI(user, task, priority, estimatedTime);
+                    const { task, priority, estimatedTime, isChecked } = taskObj;
+                    addTaskToUI(user, task, priority, estimatedTime, isChecked);
                 });
             }
 
-            function addTaskToUI(user, task, priority, estimatedTime) {
+            function addTaskToUI(user, task, priority, estimatedTime, isChecked = false) {
                 const taskContainer = document.createElement("div");
                 taskContainer.classList.add("task");
                 const label = document.createElement("label");
@@ -295,6 +297,11 @@
 
                 const checkbox = document.createElement("input");
                 checkbox.setAttribute("type", "checkbox");
+                checkbox.checked = isChecked;
+
+                checkbox.addEventListener("change", function() {
+                    updateTaskStatus(user, task, priority, estimatedTime, this.checked);
+                });
 
                 const checkboxLabel = document.createElement("label");
                 checkboxLabel.classList.add("checkbox-label");
@@ -321,6 +328,15 @@
                 let tasks = JSON.parse(localStorage.getItem(user)) || [];
                 tasks = tasks.filter(t => t.task !== task || t.priority !== priority || t.estimatedTime !== estimatedTime);
                 localStorage.setItem(user, JSON.stringify(tasks));
+            }
+
+            function updateTaskStatus(user, task, priority, estimatedTime, isChecked) {
+                let tasks = JSON.parse(localStorage.getItem(user)) || [];
+                const taskIndex = tasks.findIndex(t => t.task === task && t.priority === priority && t.estimatedTime === estimatedTime);
+                if (taskIndex !== -1) {
+                    tasks[taskIndex].isChecked = isChecked;
+                    localStorage.setItem(user, JSON.stringify(tasks));
+                }
             }
         });
     </script>
