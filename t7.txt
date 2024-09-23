@@ -250,12 +250,12 @@
                     clearInterval(interval);
                     interval = null;
                     if (isBreak) {
-                        alert("Time to get back to work!");
+                    ;
                         isBreak = false;
                         timeLeft = (parseInt(document.getElementById("workTime").value) || 25) * 60;
                         document.getElementById("backgroundAudio").play();
                     } else {
-                        alert("Great job! Take a break and relax.");
+                       ;
                         isBreak = true;
                         timeLeft = (parseInt(document.getElementById("breakTime").value) || 5) * 60;
                         document.getElementById("backgroundAudio").pause();
