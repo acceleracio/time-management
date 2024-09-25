@@ -6,14 +6,26 @@
     <title>Time Management App</title>
     
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
         body {
             background: linear-gradient(45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradientAnimation 15s ease infinite;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 50px;
-            transition: transform 0.3s ease;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
         
         @keyframes gradientAnimation {
@@ -22,18 +34,29 @@
             100% {background-position: 0% 50%;}
         }
 
-        form {
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0;
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .container::-webkit-scrollbar {
+            display: none;
+        }
+
+        form, #tasks, #timer {
+            width: 100%;
+            margin-bottom: 20px;
         }
 
         .quadrant {
             padding: 10px;
-            margin: 0 0 20px 0;
+            margin-bottom: 20px;
             border-radius: 10px;
             width: 100%;
-            box-sizing: border-box;
             overflow-wrap: break-word;
             word-wrap: break-word;
             hyphens: auto;
@@ -60,11 +83,13 @@
             align-items: center;
             flex-wrap: wrap;
             margin-bottom: 10px;
+            width: 100%;
         }
 
         .task label {
             margin-right: 10px;
             word-break: break-word;
+            flex-grow: 1;
         }
 
         .checkbox-label {
@@ -72,6 +97,7 @@
             align-items: flex-start;
             flex-grow: 1;
             flex-wrap: wrap;
+            width: 100%;
         }
 
         .delete-button {
@@ -86,6 +112,7 @@
 
         h2 {
             color: navy;
+            margin-bottom: 10px;
         }
 
         .btn {
@@ -116,65 +143,93 @@
         .btn:active {
             transform: translateY(1px);
         }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        #addTask {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #addTask:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-    <button class="btn btn-increase" onclick="resizePage(1.1)">+</button>
-    <button class="btn btn-decrease" onclick="resizePage(0.9)">-</button>
+    <div class="container">
+        <button class="btn btn-increase" onclick="resizePage(1.1)">+</button>
+        <button class="btn btn-decrease" onclick="resizePage(0.9)">-</button>
 
-    <h2>Ensure the task entered is in the right priority setting:</h2>
+        <h2>Ensure the task entered is in the right priority setting:</h2>
 
-
-    <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
-    <form>
-        <label for="username">Enter your email id:</label><br>
-        <input type="text" id="username"><br><br>
-        <button type="button" id="login">Login</button>
-    </form>
-    <br>
-    <form id="taskForm" style="display:none;">
-        <label for="todo">To-Do List:</label><br>
-        <input type="text" id="todo"><br><br>
-        <label for="priority">Priority (Urgent/Important):</label><br>
-        <select id="priority">
-            <option value="urgent-important">Urgent/Important</option>
-            <option value="important-noturgent">Important/Not Urgent</option>
-            <option value="urgent-notimportant">Urgent/Not Important</option>
-            <option value="noturgent-notimportant">Not Urgent/Not Important</option>
-        </select><br><br>
-        <label for="time">Estimated Time(minutes):</label><br>
-        <input type="number" id="time"> <br><br>
-        <label for="workTime">Work Time (minutes):</label><br>
-        <input type="number" id="workTime" value="25"><br><br>
-        <label for="breakTime">Break Time (minutes):</label><br>
-        <input type="number" id="breakTime" value="5"><br><br>
-        <button type="button" id="addTask">Add Task</button>
-    </form>
-    <br>
-    
-    <img src="vid.gif" width="100" height="100">
-
-    <div id="tasks">
-        <h2>Tasks:</h2>
-        <div class="quadrant" id="urgent-important">
-            <h3>Urgent/Important</h3>
-        </div>
-        <div class="quadrant" id="important-noturgent">
-            <h3>Important/Not Urgent</h3>
-        </div>
-        <div class="quadrant" id="urgent-notimportant">
-            <h3>Urgent/Not Important</h3>
-        </div>
-        <div class="quadrant" id="noturgent-notimportant">
-            <h3>Not Urgent/Not Important</h3>
-        </div>
-    </div>
+        <p><a href="t72.html">Go to weekly/monthly view </a></p>
+        <audio id="backgroundAudio" src="whitenoise.mp3" loop></audio>
+        <form>
+            <label for="username">Enter your email id:</label><br>
+            <input type="text" id="username"><br><br>
+            <button type="button" id="login">Login</button>
+        </form>
+        <br>
+        <form id="taskForm" style="display:none;">
+            <label for="todo">To-Do List:</label><br>
+            <input type="text" id="todo"><br><br>
+            <label for="priority">Priority (Urgent/Important):</label><br>
+            <select id="priority">
+                <option value="urgent-important">Urgent/Important</option>
+                <option value="important-noturgent">Important/Not Urgent</option>
+                <option value="urgent-notimportant">Urgent/Not Important</option>
+                <option value="noturgent-notimportant">Not Urgent/Not Important</option>
+            </select><br><br>
+            <label for="time">Estimated Time(minutes):</label><br>
+            <input type="number" id="time"> <br><br>
+            <label for="workTime">Work Time (minutes):</label><br>
+            <input type="number" id="workTime" value="25"><br><br>
+            <label for="breakTime">Break Time (minutes):</label><br>
+            <input type="number" id="breakTime" value="5"><br><br>
+            <button type="button" id="addTask">Add Task</button>
+        </form>
+        <br>
         
-    <div id="timer">
-        <h2>Timer:</h2>
-        <p id="timerText">00:00</p>
-        <button id="startTimer">Start Timer</button>
-        <button id="resetTimer">Reset Timer</button>
+        <img src="vid.gif" width="100" height="100">
+
+        <div id="tasks">
+            <h2>Tasks:</h2>
+            <div class="quadrant" id="urgent-important">
+                <h3>Urgent/Important</h3>
+            </div>
+            <div class="quadrant" id="important-noturgent">
+                <h3>Important/Not Urgent</h3>
+            </div>
+            <div class="quadrant" id="urgent-notimportant">
+                <h3>Urgent/Not Important</h3>
+            </div>
+            <div class="quadrant" id="noturgent-notimportant">
+                <h3>Not Urgent/Not Important</h3>
+            </div>
+        </div>
+            
+        <div id="timer">
+            <h2>Timer:</h2>
+            <p id="timerText">00:00</p>
+            <button id="startTimer">Start Timer</button>
+            <button id="resetTimer">Reset Timer</button>
+        </div>
     </div>
         
     <script>
@@ -182,16 +237,14 @@
 
         function resizePage(factor) {
             scale *= factor;
-            document.body.style.transform = `scale(${scale})`;
-            document.body.style.transformOrigin = '0 0';
+            document.body.style.zoom = scale;
             localStorage.setItem('zoomLevel', scale);
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             let currentUser = localStorage.getItem("currentUser");
             scale = parseFloat(localStorage.getItem('zoomLevel')) || 1;
-            document.body.style.transform = `scale(${scale})`;
-            document.body.style.transformOrigin = '0 0';
+            document.body.style.zoom = scale;
 
             if (currentUser) {
                 document.getElementById("username").value = currentUser;
@@ -250,12 +303,12 @@
                     clearInterval(interval);
                     interval = null;
                     if (isBreak) {
-                    ;
+                        ;
                         isBreak = false;
                         timeLeft = (parseInt(document.getElementById("workTime").value) || 25) * 60;
                         document.getElementById("backgroundAudio").play();
                     } else {
-                       ;
+                        ;
                         isBreak = true;
                         timeLeft = (parseInt(document.getElementById("breakTime").value) || 5) * 60;
                         document.getElementById("backgroundAudio").pause();
