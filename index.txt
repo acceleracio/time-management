@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time_management</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: black;
+            overflow: hidden; /* Hide scrollbars */
+        }
 
+        .container {
+            display: flex;
+            height: 100%;
+            width: 100%;
+            position: relative; /* For positioning the resizer */
+        }
+
+        .iframe-wrapper {
+            height: 100%;
+            overflow: hidden;
+            flex: 1;
+            box-sizing: border-box; /* Include padding and border in width */
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .resizer {
+            width: 10px;
+            background-color: gray;
+            cursor: col-resize;
+            position: absolute; /* Positioning it absolutely */
+            top: 0;
+            bottom: 0;
+            z-index: 10; /* Ensure it stays on top */
+            transition: background-color 0.2s; /* Smooth color transition */
+        }
+
+        .resizer.active {
+            background-color: lightgray; /* Indicate active dragging state */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="iframe-wrapper" id="iframe1">
+            <iframe src="t7.html" frameborder="0" title="Page 1"></iframe>
+        </div>
+        <div class="resizer" id="resizer"></div>
+        <div class="iframe-wrapper" id="iframe2">
+            <iframe src="clock.html" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const resizer = document.getElementById('resizer');
+        const leftIframe = document.getElementById('iframe1');
+        const rightIframe = document.getElementById('iframe2');
+        const container = document.querySelector('.container');
+        let isResizing = false;
+        let startX = 0;
+
+        // Set initial resizer position to the middle
+        function setInitialResizerPosition() {
+            const containerWidth = container.getBoundingClientRect().width;
+            const initialWidth = containerWidth / 2;
+
+            leftIframe.style.flex = `0 0 ${initialWidth}px`;
+            rightIframe.style.flex = `0 0 ${initialWidth}px`;
+
+            resizer.style.left = `${initialWidth}px`;
+        }
+
+        // Function to handle resizing
+        function onMove(e) {
+            if (!isResizing) return;
+
+            e.preventDefault();
+
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const containerRect = container.getBoundingClientRect();
+            const containerLeft = containerRect.left;
+
+            // Calculate the new position of the resizer and iframes
+            const resizerX = clientX - containerLeft;
+            const containerWidth = containerRect.width;
+            const minWidth = 0.25 * containerWidth; // Minimum width in pixels
+            const maxWidth = 0.75 * containerWidth; // Maximum width in pixels
+
+            // Calculate the new widths
+            const leftWidth = Math.min(Math.max(resizerX, minWidth), maxWidth);
+            const rightWidth = containerWidth - leftWidth;
+
+            // Apply the new widths to the iframes
+            leftIframe.style.flex = `0 0 ${leftWidth}px`;
+            rightIframe.style.flex = `0 0 ${rightWidth}px`;
+
+            // Move the resizer
+            resizer.style.left = `${leftWidth}px`;
+        }
+
+        // Start resizing
+        function startResize(e) {
+            isResizing = true;
+            resizer.classList.add('active'); // Add visual feedback
+            startX = e.touches ? e.touches[0].clientX : e.clientX;
+            e.preventDefault();
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', stopResize);
+            document.addEventListener('touchmove', onMove);
+            document.addEventListener('touchend', stopResize);
+        }
+
+        // Stop resizing
+        function stopResize() {
+            isResizing = false;
+            resizer.classList.remove('active'); // Remove visual feedback
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', stopResize);
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('touchend', stopResize);
+        }
+
+        // Double-click to start resizing
+        function doubleClick(e) {
+            startResize(e);
+        }
+
+        // Add event listeners for both mouse and touch events
+        resizer.addEventListener('mousedown', startResize);
+        resizer.addEventListener('touchstart', startResize);
+        resizer.addEventListener('dblclick', doubleClick); // Double-click to start resizing
+
+        // Initialize resizer position
+        setInitialResizerPosition();
+
+        // Recalculate the position if the window is resized
+        window.addEventListener('resize', setInitialResizerPosition);
+    </script>
+</body>
+</html>
